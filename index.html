@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Feed Viewer</title>
+    <link rel="stylesheet" type="text/css" href="ext/resources/css/ext-all.css">
+    <link rel="stylesheet" type="text/css" href="demo.css">
+    <style>
+    
+        .x-menu-item img.preview-right, .preview-right {
+            background-image: url(images/preview-right.gif);
+        }
+        .x-menu-item img.preview-bottom, .preview-bottom {
+            background-image: url(images/preview-bottom.gif);
+        }
+        .x-menu-item img.preview-hide, .preview-hide {
+            background-image: url(images/preview-hide.gif);
+        }
+        
+        #reading-menu .x-menu-item-checked {
+            border: 1px dotted #a3bae9 !important;
+            background: #DFE8F6;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+        
+    <script src="html2canvas/external/jquery-1.6.2.min.js"></script>
+    <script src="html2canvas/build/html2canvas.js"></script>
+    <script src="html2canvas/build/jquery.plugin.html2canvas.js"></script>
+
+    <script src="ext/bootstrap.js"></script>
+    <script src="demo/FeedPost.js"></script>
+    <script src="demo/FeedDetail.js"></script>
+    <script src="demo/FeedGrid.js"></script>
+    <script src="demo/FeedInfo.js"></script>
+    <script src="demo/FeedPanel.js"></script>
+    <script src="demo/FeedViewer.js"></script>
+    <script src="demo/FeedWindow.js"></script>
+    <script>
+        Ext.Loader.setConfig({enabled: true});
+        Ext.Loader.setPath('Ext.ux', 'ext/examples/ux/');
+        Ext.require([
+            'Ext.grid.*',
+            'Ext.data.*',
+            'Ext.util.*',
+            'Ext.Action',
+            'Ext.tab.*',
+            'Ext.button.*',
+            'Ext.form.*',
+            'Ext.layout.container.Card',
+            'Ext.layout.container.Border',
+            'Ext.ux.PreviewPlugin'
+        ]);
+        Ext.onReady(function(){
+            var app = new FeedViewer.App();
+            
+            window.setTimeout(function(){
+                var queue = html2canvas.Parse();
+                
+                console.log(queue);
+                var canvas = $(html2canvas.Renderer(queue));
+                canvas.css({
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    zIndex: 9999
+                });
+                
+                $('body').append(canvas);
+            }, 1000);
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>
