@@ -52,8 +52,21 @@
             'Ext.ux.PreviewPlugin'
         ]);
         Ext.onReady(function(){
+            
+            // demo App
             var app = new FeedViewer.App();
             
+            // 5 seconds timer
+            var i = 5;
+            console.log(i--);
+            var timer = window.setInterval(function(){
+                console.log(i--);
+                if(i === 0)
+                    window.clearInterval(timer);
+            }, 1000);
+            // end:timer
+            
+            // make screenshot after 5 seconds
             window.setTimeout(function(){
                 var queue = html2canvas.Parse();
                 
@@ -67,7 +80,7 @@
                 });
                 
                 $('body').append(canvas);
-            }, 1000);
+            }, 5000);
         });
     </script>
 </head>
