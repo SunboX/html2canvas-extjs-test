@@ -865,7 +865,10 @@ html2canvas.Parse = function (element, images, opts) {
         if (imgIndex > -1){
             return images[imgIndex+1];
         }else{
-            return false;
+            //return false;
+            img = new Image(); 
+            img.src = src;
+            return img;
         }
 				
     }
@@ -1098,7 +1101,7 @@ html2canvas.Parse = function (element, images, opts) {
     
     function renderImage (ctx, image, sx, sy, sw, sh, dx, dy, dw, dh) {
         ctx.drawImage(
-            image,
+            image.src,
             sx, //sx
             sy, //sy
             sw, //sw
@@ -1213,12 +1216,19 @@ html2canvas.Parse = function (element, images, opts) {
         
         if ( typeof background_image !== "undefined" && /^(1|none)$/.test( background_image ) === false ) {
             background_image = html2canvas.Util.backgroundImage( background_image );
-            image = loadImage( background_image );	
             
-            if(!image && /^(-webkit|-moz|linear-gradient|-o-)/.test(background_image)){
+            if(/^(-webkit|-moz|linear-gradient|-o-)/.test(background_image)){
                 image = html2canvas.Generate.Gradient(background_image, bounds);
+            } else {
+                image = loadImage(background_image);
             }
-
+            
+            if(image.width === 0)
+                image.width = bounds.width;
+                
+            if(image.height === 0)
+                image.height = bounds.height;
+                
             bgp = getBackgroundPosition(el, bounds, image);
             
 
@@ -2036,6 +2046,12 @@ html2canvas.Renderer = function(parseQueue, opts){
                                 //  console.log(renderItem);
                                 // console.log(renderItem.arguments[0].width);    
                                 if (renderItem['arguments'][8] > 0 && renderItem['arguments'][7]){
+                                    console.log(renderItem['arguments'][0]);
+                                    if(typeof renderItem['arguments'][0] === 'string'){
+                                        var img = new Image();
+                                        img.src = renderItem['arguments'][0];
+                                        renderItem['arguments'][0] = img;
+                                    }
                                     ctx.drawImage(
                                         renderItem['arguments'][0],
                                         renderItem['arguments'][1],
