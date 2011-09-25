@@ -2046,7 +2046,6 @@ html2canvas.Renderer = function(parseQueue, opts){
                                 //  console.log(renderItem);
                                 // console.log(renderItem.arguments[0].width);    
                                 if (renderItem['arguments'][8] > 0 && renderItem['arguments'][7]){
-                                    console.log(renderItem['arguments'][0]);
                                     if(typeof renderItem['arguments'][0] === 'string'){
                                         var img = new Image();
                                         img.src = renderItem['arguments'][0];
